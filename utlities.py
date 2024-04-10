@@ -24,7 +24,7 @@ def dropDuplicates(dataframe, column_name):
 # CLEANSE EMAILS
 def cleanseEmails(dataframe,column_name,dedupe_emails,remove_personals_emails):
 
-  if 'email' in column_name.lower() and column_name is not '0':
+  if 'email' in column_name.lower() and column_name != '0':
     # LOOP TO CLEANSE
     for index, value in enumerate(dataframe[column_name]):
         value = value.replace('_x000D_','').replace('\n','').replace('\n\n','')
