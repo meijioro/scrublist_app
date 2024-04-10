@@ -115,7 +115,7 @@ def removeColumns(dataframe, keepColumns):
 # CACHE READ FILE
 @st.cache_data
 def loadCachedData(file,sheetname='',delimitter=','):
-    try:
+    if 'csv' in file.name:
         return pd.read_csv(file, sep=delimitter)
-    except:
+    else:
         return pd.read_excel(file, sheet_name=sheetname, skiprows=0, header=0, dtype=object)
