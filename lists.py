@@ -88,6 +88,7 @@ special_characters_to_replace = {
     "’" : "&rsquo;",
     "“" : "&ldquo;",
     "”" : "&rdquo;",
+    "£" : "&pound;",
   }   
 
 punctuation_to_remove = [";", ",", "|"]
@@ -96,5 +97,7 @@ we_proccess_status = [
   'Contact Opted Out',
   'Email Verification Not Valid (email_account_invalid)',
   'Email Verification Not Valid (email_domain_invalid)',
-  'Processed'
+  'Processed',
+  'Contact Missing Required Info',
+  'Contact Not In WE'
 ]

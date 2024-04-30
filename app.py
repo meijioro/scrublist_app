@@ -1,37 +1,13 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-import scrub, everest_compare
 
-class MultiApp:
-    def __init__(self):
-        self.apps = []
-    def add_app(self, title, func):
-        self.apps.append({
-            "title": title,
-            "function": func
-        })
-    def run():
-        with st.sidebar:        
-            app = option_menu(
-                menu_title='Pondering ',
-                options=['Scrub List','Remove Invalid Records'],
-                styles={
-                    "container": {
-                            "padding": "5!important",
-                            "background-color":'black'
-                        },
-                    "nav-link": {
-                        "color":"white",
-                        "margin":"0px", 
-                        "--hover-color": "blue"
-                        },
-                    "nav-link-selected": {
-                        "background-color": "#02ab21"
-                    },
-                })
-        if app == "Scrub List":
-            scrub.app()
-        if app == "Remove Invalid Records":
-            everest_compare.app()    
-       
-    run()                
+st.set_page_config(
+    page_title="Scrubbing Lists App",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    page_icon="👻"
+)
+
+st.title('Scrubbing Lists App')
+st.caption('This is an all-in-one app to programatically cleanse lists.')
+
+st.write("![Your Awsome GIF](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJjN2ZwM2lkbWwyaHNlMHo5Mzg4bzduODl4MGM1dmZzanlnYnJvbCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JIX9t2j0ZTN9S/giphy.gif)")

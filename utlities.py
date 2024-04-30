@@ -27,14 +27,15 @@ def cleanseEmails(dataframe,column_name,dedupe_emails,remove_personals_emails):
   if 'email' in column_name.lower() and column_name != '0':
     # LOOP TO CLEANSE
     for index, value in enumerate(dataframe[column_name]):
-        value = value.replace('_x000D_','').replace('\n','').replace('\n\n','')
-        value = correctEmailFormat(value)
+        if value: # check if value exists
+          value = value.replace('_x000D_','').replace('\n','').replace('\n\n','')
+          value = correctEmailFormat(value)
+          
+          if value[-1] == '.' or value[-1] == "'":
+            value = value[0:-1]
 
-        if value[-1] == '.' or value[-1] == "'":
-          value = value[0:-1]
-
-        # TRIM LEADING WHITESPACE AND LOWERCASE EMAILS
-        dataframe.at[index, column_name] = value.strip().lower()
+          # TRIM LEADING WHITESPACE AND LOWERCASE EMAILS
+          dataframe.at[index, column_name] = value.strip().lower()
 
         # DELETE EMAILS WITH PERSONAL DOMAINS
         if remove_personals_emails:
@@ -48,6 +49,12 @@ def cleanseEmails(dataframe,column_name,dedupe_emails,remove_personals_emails):
   else:
      st.sidebar.write('This must be an email column.')
     
+  return dataframe
+
+def lowercaseString(dataframe, column_name):
+  for index, value in enumerate(dataframe[column_name]):    
+    dataframe.at[index, column_name] = value.strip().lower()
+
   return dataframe
 
 
@@ -114,8 +121,14 @@ def removeColumns(dataframe, keepColumns):
 
 # CACHE READ FILE
 @st.cache_data
-def loadCachedData(file,sheetname='',delimitter=','):
+def loadCachedData(file,sheetname,delimitter,str_has_header):
     if 'csv' in file.name:
-        return pd.read_csv(file, sep=delimitter)
+        if str_has_header == 'Yes': 
+          return pd.read_csv(file, sep=delimitter)
+        else:
+          return pd.read_csv(file, sep=delimitter,header=None,dtype=object)
     else:
         return pd.read_excel(file, sheet_name=sheetname, skiprows=0, header=0, dtype=object)
+
+
+#df_CS_Sales_validated = pd.read_csv(CS_Sales_validated, sep=',', header=None, dtype=object)
